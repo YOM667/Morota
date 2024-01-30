@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "me.youm.morota.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "morota.refmap.json",
+  "mixins": [
+    "MinecraftMixin"
+  ],
+  "client":[
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8.4"
+}

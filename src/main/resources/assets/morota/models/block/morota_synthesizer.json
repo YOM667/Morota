@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "morota:block/morota_synthesizer_around",
+    "north": "morota:block/morota_synthesizer_around",
+    "south": "morota:block/morota_synthesizer_around",
+    "east": "morota:block/morota_synthesizer_around",
+    "west": "morota:block/morota_synthesizer_around",
+    "up": "morota:block/morota_synthesizer_top",
+    "down": "morota:block/morota_synthesizer_bottom"
+  }
+}

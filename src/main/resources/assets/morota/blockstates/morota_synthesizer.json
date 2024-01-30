@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "morota:block/morota_synthesizer"
+    }
+  }
+}
