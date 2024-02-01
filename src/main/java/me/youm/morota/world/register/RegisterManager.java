@@ -7,8 +7,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
  * Created on 2024/1/25
  */
 public class RegisterManager {
-    public static void registerAll(IEventBus eventBus){
+    public void registerAll(IEventBus eventBus){
         ItemRegister.ITEMS.register(eventBus);
         BlockRegister.BLOCKS.register(eventBus);
+        EntityRegister.ENTITY_TYPE.register(eventBus);
     }
 }

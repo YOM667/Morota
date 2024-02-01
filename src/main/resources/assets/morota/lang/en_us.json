@@ -1,6 +1,7 @@
 {
-  "item.morota.morota_sword": "Morota Sword",
   "itemGroup.morota": "Morota",
+  "item.morota.morota_sword": "Morota Sword",
   "item.morota.morota_coal": "Morota Coal",
+  "item.morota.morota_bottle": "Morota Bottle",
   "block.morota.morota_synthesizer": "Morota Synthesizer"
 }

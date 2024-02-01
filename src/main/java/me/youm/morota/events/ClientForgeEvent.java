@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
  * @author YouM
  * Created on 2024/1/25
  */
-@Mod.EventBusSubscriber(modid = Morota.MOD_ID,value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Morota.MOD_ID,value = Dist.CLIENT,bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ClientForgeEvent {
     @SubscribeEvent
     public static void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event){

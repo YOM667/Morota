@@ -1,6 +1,7 @@
 {
-  "item.morota.morota_sword": "莫罗塔之剑",
   "itemGroup.morota": "莫罗塔",
+  "item.morota.morota_sword": "莫罗塔之剑",
   "item.morota.morota_coal": "莫罗塔煤矿石",
+  "item.morota.morota_bottle": "莫罗塔特质容器",
   "block.morota.morota_synthesizer": "莫罗塔合成器"
 }

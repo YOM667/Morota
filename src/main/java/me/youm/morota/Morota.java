@@ -18,12 +18,15 @@ public class Morota
     public static final String MOD_ID = "morota";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
+
+    public RegisterManager registerManager;
     public Morota() {
+        this.registerManager = new RegisterManager();
         // Register the setup method for mod loading
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
-        RegisterManager.registerAll(modEventBus);
+        registerManager.registerAll(modEventBus);
     }
     private void setup(final FMLCommonSetupEvent event)
     {

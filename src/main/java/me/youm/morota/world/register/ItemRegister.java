@@ -15,6 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author YouM
  * Created on 2024/1/24
  */
+@SuppressWarnings("all")
 public class ItemRegister {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Morota.MOD_ID);
     public static final RegistryObject<Item> MOROTA_SWORD = ITEMS.register("morota_sword",
@@ -33,4 +34,11 @@ public class ItemRegister {
                     .rarity(Rarity.UNCOMMON)
             )
     );
+    public static final RegistryObject<Item> MOROTA_BOTTLE = ITEMS.register("morota_bottle",
+            () -> new Item(
+                    new Item.Properties().tab(MorotaCreativeTab.TAB)
+            )
+    );
+
+
 }
