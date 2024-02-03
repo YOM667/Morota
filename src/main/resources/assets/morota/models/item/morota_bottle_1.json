@@ -1,0 +1,6 @@
+{
+  "parent": "morota:item/morota_bottle",
+  "textures": {
+    "layer0": "morota:item/morota_bottle_1"
+  }
+}

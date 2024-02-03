@@ -17,7 +17,7 @@ public class Utils {
     }
 
     public static void repeat(int count, Consumer<Integer> consumer) {
-        for (int index = 1; index <= count; index++) {
+        for (int index = 0; index <= count; index++) {
             consumer.accept(index);
         }
     }

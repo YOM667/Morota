@@ -2,5 +2,49 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "morota:item/morota_bottle"
-  }
+  },
+  "overrides":[
+    {
+      "predicate": {
+        "morota:energy": 100
+      },
+      "model": "morota:item/morota_bottle_5"
+    },
+    {
+      "predicate": {
+        "morota:energy": 90
+      },
+      "model": "morota:item/morota_bottle_4"
+    },
+    {
+      "predicate": {
+        "morota:energy": 70
+      },
+      "model": "morota:item/morota_bottle_3"
+    },
+    {
+      "predicate": {
+        "morota:energy": 50
+      },
+      "model": "morota:item/morota_bottle_2"
+    },
+    {
+      "predicate": {
+        "morota:energy": 30
+      },
+      "model": "morota:item/morota_bottle_1"
+    },
+    {
+      "predicate": {
+        "morota:energy": 10
+      },
+      "model": "morota:item/morota_bottle_0"
+    },
+    {
+      "predicate": {
+        "morota:energy": 0
+      },
+      "model": "morota:item/morota_bottle"
+    }
+  ]
 }
