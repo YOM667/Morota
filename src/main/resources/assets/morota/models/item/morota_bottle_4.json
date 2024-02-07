@@ -1,5 +1,5 @@
 {
-  "parent": "morota:item/morota_bottle",
+  "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "morota:item/morota_bottle_4"
   }

@@ -16,30 +16,30 @@ import org.jetbrains.annotations.Nullable;
  * @author YouM
  * Created on 2024/1/26
  */
-public class MorotaEnergyCapabilityProvider implements ICapabilityProvider, NonNullSupplier<MorotaEnergyCapability>, INBTSerializable<CompoundTag> {
-    public static Capability<MorotaEnergyCapability> MOROTA_ENERGY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
-    private final MorotaEnergyCapability morotaEnergyCapability = new MorotaEnergyCapability();
+public class MorotaEntityEnergyCapabilityProvider implements ICapabilityProvider, NonNullSupplier<MorotaEntityEnergyCapability>, INBTSerializable<CompoundTag> {
+    public static Capability<MorotaEntityEnergyCapability> MOROTA_ENTITY_ENERGY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    private final MorotaEntityEnergyCapability morotaEnergyCapability = new MorotaEntityEnergyCapability();
 
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return cap == MOROTA_ENERGY_CAPABILITY ? LazyOptional.of(this).cast() : LazyOptional.empty();
+        return cap == MOROTA_ENTITY_ENERGY_CAPABILITY ? LazyOptional.of(this).cast() : LazyOptional.empty();
 
     }
 
     @Override
     public CompoundTag serializeNBT() {
-        return this.morotaEnergyCapability.serializeNBTData();
+        return this.morotaEnergyCapability.serializeNBT();
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        this.morotaEnergyCapability.deserializeNBTData(nbt);
+        this.morotaEnergyCapability.deserializeNBT(nbt);
     }
 
     @NotNull
     @Override
-    public MorotaEnergyCapability get() {
+    public MorotaEntityEnergyCapability get() {
         return this.morotaEnergyCapability;
     }
 }

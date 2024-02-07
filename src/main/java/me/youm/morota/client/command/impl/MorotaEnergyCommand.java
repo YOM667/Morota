@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import me.youm.morota.Morota;
 import me.youm.morota.client.command.Command;
 import me.youm.morota.client.command.CommandExecutor;
-import me.youm.morota.world.player.capability.MorotaEnergyCapabilityProvider;
+import me.youm.morota.world.player.capability.MorotaEntityEnergyCapabilityProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -54,7 +54,7 @@ public class MorotaEnergyCommand extends CommandExecutor {
             stack.sendFailure(new TextComponent("execute field, target player not exist!"));
             return 1;
         }
-        player.getCapability(MorotaEnergyCapabilityProvider.MOROTA_ENERGY_CAPABILITY).ifPresent(capability -> {
+        player.getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).ifPresent(capability -> {
             capability.setMorotaEnergy(value);
             stack.sendSuccess(new TextComponent("have been set energy: " + capability.getMorotaEnergy()),true);
         });
@@ -65,7 +65,7 @@ public class MorotaEnergyCommand extends CommandExecutor {
             stack.sendFailure(new TextComponent("execute field, target player not exist!"));
             return 1;
         }
-        player.getCapability(MorotaEnergyCapabilityProvider.MOROTA_ENERGY_CAPABILITY).ifPresent(capability -> {
+        player.getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).ifPresent(capability -> {
             stack.sendSuccess(new TextComponent("player energy: " + capability.getMorotaEnergy()),true);
         });
         return 0;

@@ -2,7 +2,7 @@ package me.youm.morota.world.item;
 
 import me.youm.morota.networking.Networking;
 import me.youm.morota.networking.packets.ClientMorotaEnergyPacket;
-import me.youm.morota.world.player.capability.MorotaEnergyCapabilityProvider;
+import me.youm.morota.world.player.capability.MorotaEntityEnergyCapabilityProvider;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -26,7 +26,7 @@ public class MorotaCoal extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide) {
-            pPlayer.getCapability(MorotaEnergyCapabilityProvider.MOROTA_ENERGY_CAPABILITY).ifPresent(capability -> {
+            pPlayer.getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).ifPresent(capability -> {
                 if (!capability.isMaxEnergy()) {
                     Networking.sendToServer(new ClientMorotaEnergyPacket());
                     this.setDamage(itemstack,this.getDamage(itemstack) - 10);

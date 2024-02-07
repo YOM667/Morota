@@ -2,7 +2,7 @@ package me.youm.morota.world.item;
 
 import me.youm.morota.utils.Utils;
 import me.youm.morota.utils.world.WorldUtil;
-import me.youm.morota.world.player.capability.MorotaEnergyCapabilityProvider;
+import me.youm.morota.world.player.capability.MorotaEntityEnergyCapabilityProvider;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +31,7 @@ public class MorotaSword extends SwordItem {
             return InteractionResultHolder.fail(pPlayer.getItemInHand(pUsedHand));
         }
         AtomicBoolean energyEnough = new AtomicBoolean(true);
-        pPlayer.getCapability(MorotaEnergyCapabilityProvider.MOROTA_ENERGY_CAPABILITY).ifPresent(capability -> {
+        pPlayer.getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).ifPresent(capability -> {
             if (capability.getMorotaEnergy() >= 10) {
                 capability.subEnergyData(10);
                 energyEnough.set(true);

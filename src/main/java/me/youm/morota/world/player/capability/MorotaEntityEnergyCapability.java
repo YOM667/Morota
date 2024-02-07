@@ -1,14 +1,15 @@
 package me.youm.morota.world.player.capability;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.common.util.INBTSerializable;
 
 /**
  * @author YouM
  * Created on 2024/1/26
  */
-public class MorotaEnergyCapability {
+public class MorotaEntityEnergyCapability implements INBTSerializable<CompoundTag> {
     private int morotaEnergy = 0;
-    private static final int MAX_ENERGY = 100;
+    private static final int MAX_ENERGY = 100000;
     public int getMorotaEnergy() {
         return morotaEnergy;
     }
@@ -21,19 +22,22 @@ public class MorotaEnergyCapability {
     public void setMorotaEnergy(int morotaEnergy) {
         this.morotaEnergy = morotaEnergy;
     }
-    public void cloneCapability(MorotaEnergyCapability source){
+    public void cloneCapability(MorotaEntityEnergyCapability source){
         this.morotaEnergy = source.getMorotaEnergy();
-        this.deserializeNBTData(source.serializeNBTData());
+        this.deserializeNBT(source.serializeNBT());
     }
     public boolean isMaxEnergy(){
         return this.morotaEnergy == MAX_ENERGY;
     }
-    public CompoundTag serializeNBTData(){
+    @Override
+    public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        nbt.putInt("morotaEnergy",this.morotaEnergy);
+        nbt.putInt("morota_energy",this.morotaEnergy);
         return nbt;
     }
-    public void deserializeNBTData(CompoundTag nbt){
-        this.morotaEnergy = nbt.getInt("morotaEnergy");
+
+    @Override
+    public void deserializeNBT(CompoundTag nbt) {
+        this.morotaEnergy = nbt.getInt("morota_energy");
     }
 }

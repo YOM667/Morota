@@ -1,7 +1,7 @@
 package me.youm.morota.networking.packets;
 
 import me.youm.morota.utils.math.RandomUtil;
-import me.youm.morota.world.player.capability.MorotaEnergyCapabilityProvider;
+import me.youm.morota.world.player.capability.MorotaEntityEnergyCapabilityProvider;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -16,6 +16,7 @@ public class ClientMorotaEnergyPacket {
 
     }
     public ClientMorotaEnergyPacket(FriendlyByteBuf byteBuf) {
+
     }
     public void toBytes(FriendlyByteBuf byteBuf){
 
@@ -23,7 +24,7 @@ public class ClientMorotaEnergyPacket {
     public void handler(Supplier<NetworkEvent.Context> supplier){
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(()->{
-            context.getSender().getCapability(MorotaEnergyCapabilityProvider.MOROTA_ENERGY_CAPABILITY).ifPresent(capability->{
+            context.getSender().getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).ifPresent(capability->{
                 capability.addEnergyData(RandomUtil.getRandomInRange(3,6));
             });
         });

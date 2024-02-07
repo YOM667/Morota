@@ -1,4 +1,4 @@
-package me.youm.morota.world.item;
+package me.youm.morota.world.register.item;
 
 import me.youm.morota.Morota;
 import me.youm.morota.world.register.ItemRegister;

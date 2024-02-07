@@ -25,3 +25,10 @@ not hurt player, not spawn fire and cutome color
 `
 achieve right click to unleash lightning bolt
 `
+## 2024/2/6
+[*] morota bottle 
+
+`
+add capabilities to storage energy data
+and use custom ItemProperties to update item icon
+`

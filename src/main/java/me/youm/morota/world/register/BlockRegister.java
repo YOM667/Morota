@@ -2,7 +2,7 @@ package me.youm.morota.world.register;
 
 import me.youm.morota.Morota;
 import me.youm.morota.world.block.MorotaSynthesizerBlock;
-import me.youm.morota.world.item.MorotaCreativeTab;
+import me.youm.morota.world.register.item.MorotaCreativeTab;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;

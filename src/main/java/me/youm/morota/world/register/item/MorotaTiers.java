@@ -1,4 +1,4 @@
-package me.youm.morota.world.item;
+package me.youm.morota.world.register.item;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;

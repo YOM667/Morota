@@ -3,7 +3,7 @@ package me.youm.morota;
 import com.mojang.logging.LogUtils;
 import me.youm.morota.client.command.CommandManager;
 import me.youm.morota.networking.Networking;
-import me.youm.morota.world.item.MorotaItemProperties;
+import me.youm.morota.world.register.item.MorotaItemProperties;
 import me.youm.morota.world.register.RegisterManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -24,14 +24,15 @@ public class Morota
     public static CommandManager commandManager;
     public static RegisterManager registerManager;
     public Morota() {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         registerManager = new RegisterManager();
         commandManager = new CommandManager();
+        registerManager.registerAll(modEventBus);
         // Register the setup method for mod loading
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
         MinecraftForge.EVENT_BUS.register(this);
-        registerManager.registerAll(modEventBus);
+
     }
     private void commonSetup(final FMLCommonSetupEvent event)
     {

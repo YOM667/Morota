@@ -1,6 +1,8 @@
 package me.youm.morota.world.register;
 
 import me.youm.morota.Morota;
+import me.youm.morota.world.register.item.MorotaCreativeTab;
+import me.youm.morota.world.register.item.MorotaTiers;
 import me.youm.morota.world.item.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;

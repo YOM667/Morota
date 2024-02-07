@@ -1,7 +1,7 @@
 package me.youm.morota.networking;
 
 import me.youm.morota.Morota;
-import me.youm.morota.networking.packets.ClientMorotaEnergyPacket;
+import me.youm.morota.networking.packets.ClientMorotaItemEnergyPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -15,9 +15,10 @@ import net.minecraftforge.network.simple.SimpleChannel;
  */
 public class Networking {
     private static SimpleChannel INSTANCE;
+    public static final String VERSION = "0.1";
     private static int packetID = 0;
 
-    private static int id() {
+    private static int nextID() {
         return packetID++;
     }
 
@@ -25,15 +26,15 @@ public class Networking {
         SimpleChannel channel = NetworkRegistry.ChannelBuilder
                 .named(new ResourceLocation(Morota.MOD_ID, "messages"))
                 .networkProtocolVersion(() -> "0.1")
-                .clientAcceptedVersions(version -> true)
-                .serverAcceptedVersions(version -> true)
+                .clientAcceptedVersions(version -> version.equals(VERSION))
+                .serverAcceptedVersions(version -> version.equals(VERSION))
                 .simpleChannel();
         INSTANCE = channel;
 
-        channel.messageBuilder(ClientMorotaEnergyPacket.class,id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(ClientMorotaEnergyPacket::new)
-                .encoder(ClientMorotaEnergyPacket::toBytes)
-                .consumer(ClientMorotaEnergyPacket::handler)
+        channel.messageBuilder(ClientMorotaItemEnergyPacket.class, nextID(), NetworkDirection.PLAY_TO_SERVER)
+                .encoder(ClientMorotaItemEnergyPacket::toBytes)
+                .decoder(ClientMorotaItemEnergyPacket::new)
+                .consumer(ClientMorotaItemEnergyPacket::handle)
                 .add();
     }
     public static <MSG> void sendToServer(MSG message){

@@ -1,11 +1,14 @@
 package me.youm.morota.events;
 
 import me.youm.morota.Morota;
-import me.youm.morota.world.player.capability.MorotaEnergyCapability;
-import me.youm.morota.world.player.capability.MorotaEnergyCapabilityProvider;
+import me.youm.morota.world.item.MorotaBottle;
+import me.youm.morota.world.player.capability.MorotaEntityEnergyCapability;
+import me.youm.morota.world.player.capability.MorotaEntityEnergyCapabilityProvider;
+import me.youm.morota.world.player.capability.MorotaItemEnergyCapabilityProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.util.LazyOptional;
@@ -24,16 +27,22 @@ public class ClientForgeEvent {
     @SubscribeEvent
     public static void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event){
         if(event.getObject() instanceof Player){
-            if(!event.getObject().getCapability(MorotaEnergyCapabilityProvider.MOROTA_ENERGY_CAPABILITY).isPresent()) {
-                event.addCapability(new ResourceLocation(Morota.MOD_ID, "properties"), new MorotaEnergyCapabilityProvider());
+            if(!event.getObject().getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).isPresent()) {
+                event.addCapability(new ResourceLocation(Morota.MOD_ID, "properties"), new MorotaEntityEnergyCapabilityProvider());
             }
+        }
+    }
+    @SubscribeEvent
+    public static void onAttachItemStackCapabilityEvent(AttachCapabilitiesEvent<ItemStack> event) {
+        if (event.getObject().getItem() instanceof MorotaBottle) {
+            event.addCapability(new ResourceLocation(Morota.MOD_ID, "item_energy"), new MorotaItemEnergyCapabilityProvider());
         }
     }
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event){
         event.getOriginal().reviveCaps();
-        LazyOptional<MorotaEnergyCapability> oldCapability = event.getOriginal().getCapability(MorotaEnergyCapabilityProvider.MOROTA_ENERGY_CAPABILITY);
-        LazyOptional<MorotaEnergyCapability> newCapability = event.getPlayer().getCapability(MorotaEnergyCapabilityProvider.MOROTA_ENERGY_CAPABILITY);
+        LazyOptional<MorotaEntityEnergyCapability> oldCapability = event.getOriginal().getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY);
+        LazyOptional<MorotaEntityEnergyCapability> newCapability = event.getPlayer().getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY);
         if (oldCapability.isPresent() && newCapability.isPresent()) {
             oldCapability.ifPresent(old ->
                 newCapability.ifPresent(current -> current.cloneCapability(old))
@@ -43,6 +52,6 @@ public class ClientForgeEvent {
     }
     @SubscribeEvent
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event){
-        event.register(MorotaEnergyCapability.class);
+        event.register(MorotaEntityEnergyCapability.class);
     }
 }
