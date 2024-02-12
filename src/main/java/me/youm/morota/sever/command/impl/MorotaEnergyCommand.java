@@ -31,7 +31,7 @@ public class MorotaEnergyCommand extends CommandExecutor {
                 .then(Commands.literal("energy")
                         .then(Commands.literal("set")
                                 .then(Commands.argument("targets", EntityArgument.player())
-                                        .then(Commands.argument("value", IntegerArgumentType.integer(1,1000))
+                                        .then(Commands.argument("value", IntegerArgumentType.integer(0,1000))
                                                 .executes(context -> setEnergy(
                                                         EntityArgument.getPlayer(context,"targets"),
                                                         context.getSource(),

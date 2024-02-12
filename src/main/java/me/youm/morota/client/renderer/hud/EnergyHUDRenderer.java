@@ -18,18 +18,19 @@ public class EnergyHUDRenderer {
     private static final ResourceLocation PROGRESS = new ResourceLocation(Morota.MOD_ID, "textures/gui/energy_progress.png");
     public static final IHUDRenderer render = (((poseStack, partialTick, width, height) -> {
         MorotaEntityEnergyCapability capability = PlayerUtil.getMorotaEntityEnergyCapability(Minecraft.getInstance().player);
+
         RenderUtil.drawImage(
                 poseStack,
-                7,
-                height - 24,
+                width - 203,
+                11,
                 (capability.getMorotaEnergy() / 100.0f) * 196.0f,
                 8,
                 PROGRESS
         );
         RenderUtil.drawImage(
                 poseStack,
+                width - 205,
                 5,
-                height - 30,
                 200,
                 20,
                 BACKGROUND
@@ -38,8 +39,8 @@ public class EnergyHUDRenderer {
                 poseStack,
                 Morota.fontLoader.siyuan,
                 capability.getMorotaEnergy() + " %",
-                103,
-                height - 24,
+                width - 103,
+                11,
                 0xFFFFFF
         );
 

@@ -32,3 +32,10 @@ achieve right click to unleash lightning bolt
 add capabilities to storage energy data
 and use custom ItemProperties to update item icon
 `
+## 2024/2/12
+[+] morota energy hud
+
+[*] fix command `limit fix (1 - max) to (0 - max)`
+
+`a new morota energy bar`
+

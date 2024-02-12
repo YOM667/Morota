@@ -43,7 +43,6 @@ public class Morota {
     private void commonSetup(final FMLCommonSetupEvent event) {
         fontLoader = new FontLoader();
         rendererManager = new HUDRendererManager();
-        rendererManager.load();
         LOGGER.info("MOD SETUP...");
         //register networking
         Networking.register();

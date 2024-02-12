@@ -1,7 +1,5 @@
 package me.youm.morota.events;
 
-import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import me.youm.morota.Morota;
 import me.youm.morota.world.item.MorotaBottle;
 import me.youm.morota.world.player.capability.MorotaEntityEnergyCapability;
@@ -59,11 +57,6 @@ public class ClientForgeEvent {
     }
     @SubscribeEvent
     public static void registerHUD(final RenderGameOverlayEvent event){
-        Window window = event.getWindow();
-        PoseStack poseStack = event.getMatrixStack();
-        float partialTicks = event.getPartialTicks();
-        Morota.rendererManager.hudList.forEach(renderer->{
-            renderer.render(poseStack, partialTicks, window.getGuiScaledWidth(), window.getGuiScaledHeight());
-        });
+        Morota.rendererManager.register(event);
     }
 }
