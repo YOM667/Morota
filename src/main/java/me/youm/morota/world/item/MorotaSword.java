@@ -1,8 +1,11 @@
 package me.youm.morota.world.item;
 
-import me.youm.morota.utils.Utils;
+import me.youm.morota.networking.Networking;
+import me.youm.morota.networking.packets.ServerMorotaEnergySyncPacket;
+import me.youm.morota.utils.Util;
 import me.youm.morota.utils.world.WorldUtil;
 import me.youm.morota.world.player.capability.MorotaEntityEnergyCapabilityProvider;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -34,6 +37,7 @@ public class MorotaSword extends SwordItem {
         pPlayer.getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).ifPresent(capability -> {
             if (capability.getMorotaEnergy() >= 10) {
                 capability.subEnergyData(10);
+                Networking.sendToClient(new ServerMorotaEnergySyncPacket(capability.getMorotaEnergy()), (ServerPlayer) pPlayer);
                 energyEnough.set(true);
             } else {
                 energyEnough.set(false);
@@ -45,7 +49,7 @@ public class MorotaSword extends SwordItem {
         Vec3 lookAngle = pPlayer.getLookAngle();
         pPlayer.moveTo(pPlayer.getX() + lookAngle.x * 4f, pPlayer.getY(), pPlayer.getZ() + lookAngle.z * 4f);
         float padding = 3F;
-        Utils.repeat(3, index -> {
+        Util.repeat(3, index -> {
             index += 1;
             Vec3 lightingLocation = new Vec3(
                     pPlayer.getX() + lookAngle.x * index * padding,

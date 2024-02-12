@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  */
 public class MorotaEntityEnergyCapability implements INBTSerializable<CompoundTag> {
     private int morotaEnergy = 0;
-    private static final int MAX_ENERGY = 100000;
+    private int MAX_ENERGY = 100;
     public int getMorotaEnergy() {
         return morotaEnergy;
     }
@@ -20,7 +20,9 @@ public class MorotaEntityEnergyCapability implements INBTSerializable<CompoundTa
         this.morotaEnergy = Math.min(this.morotaEnergy - data,MAX_ENERGY);
     }
     public void setMorotaEnergy(int morotaEnergy) {
-        this.morotaEnergy = morotaEnergy;
+        if(morotaEnergy <= MAX_ENERGY) {
+            this.morotaEnergy = morotaEnergy;
+        }
     }
     public void cloneCapability(MorotaEntityEnergyCapability source){
         this.morotaEnergy = source.getMorotaEnergy();
@@ -39,5 +41,11 @@ public class MorotaEntityEnergyCapability implements INBTSerializable<CompoundTa
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         this.morotaEnergy = nbt.getInt("morota_energy");
+    }
+    public void setMaxEnergy(int maxEnergy){
+        this.MAX_ENERGY = maxEnergy;
+    }
+    public int getMaxEnergy(){
+        return this.morotaEnergy;
     }
 }

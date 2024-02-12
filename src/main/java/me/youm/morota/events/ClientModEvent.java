@@ -1,7 +1,7 @@
 package me.youm.morota.events;
 
 import me.youm.morota.Morota;
-import me.youm.morota.client.renderer.MorotaLightningBoltRenderer;
+import me.youm.morota.client.renderer.entity.MorotaLightningBoltRenderer;
 import me.youm.morota.world.register.EntityRegister;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -18,4 +18,5 @@ public class ClientModEvent {
     public static void registerRenderer(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityRegister.MOROTA_LIGHTNING_BOLT.get(), MorotaLightningBoltRenderer::new);
     }
+
 }

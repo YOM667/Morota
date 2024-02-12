@@ -46,7 +46,7 @@ public class MorotaBottle extends Item {
             if(capability.getMorotaEnergy() > 0){
                 resultHolder.set(ItemUtils.startUsingInstantly(pLevel, pPlayer, pHand));
             }else{
-                resultHolder.set(InteractionResultHolder.pass(bottleStack));
+                resultHolder.set(InteractionResultHolder.fail(bottleStack));
             }
         });
         return resultHolder.get();

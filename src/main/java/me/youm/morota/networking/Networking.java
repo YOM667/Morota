@@ -2,6 +2,7 @@ package me.youm.morota.networking;
 
 import me.youm.morota.Morota;
 import me.youm.morota.networking.packets.ClientMorotaItemEnergyPacket;
+import me.youm.morota.networking.packets.ServerMorotaEnergySyncPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -35,6 +36,11 @@ public class Networking {
                 .encoder(ClientMorotaItemEnergyPacket::toBytes)
                 .decoder(ClientMorotaItemEnergyPacket::new)
                 .consumer(ClientMorotaItemEnergyPacket::handle)
+                .add();
+        channel.messageBuilder(ServerMorotaEnergySyncPacket.class, nextID(), NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(ServerMorotaEnergySyncPacket::toBytes)
+                .decoder(ServerMorotaEnergySyncPacket::new)
+                .consumer(ServerMorotaEnergySyncPacket::handle)
                 .add();
     }
     public static <MSG> void sendToServer(MSG message){

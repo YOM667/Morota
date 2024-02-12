@@ -1,6 +1,7 @@
 package me.youm.morota.networking.packets;
 
 import me.youm.morota.networking.IPacket;
+import me.youm.morota.networking.Networking;
 import me.youm.morota.utils.player.PlayerUtil;
 import me.youm.morota.world.player.capability.MorotaItemEnergyCapability;
 import me.youm.morota.world.player.capability.MorotaItemEnergyCapabilityProvider;
@@ -42,7 +43,7 @@ public class ClientMorotaItemEnergyPacket implements IPacket {
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
             if (player != null) {
-                log.debug("sender: " + player.getName() + " | " + player.getStringUUID());
+                log.debug("sender: " + player.getName().getString() + " | " + player.getStringUUID());
                 ItemStack playerUseItem = player.getItemInHand(player.getUsedItemHand());
                 playerUseItem.getCapability(MorotaItemEnergyCapabilityProvider.MOROTA_ITEM_ENERGY_CAPABILITY).ifPresent(itemCapability -> {
                     log.debug("get item capability data: " + itemCapability.getMorotaEnergy());
@@ -55,6 +56,8 @@ public class ClientMorotaItemEnergyPacket implements IPacket {
                     }
                 });
                 PlayerUtil.getMorotaEntityEnergyCapability(player).addEnergyData(consumption);
+                Networking.sendToClient(new ServerMorotaEnergySyncPacket(PlayerUtil.getMorotaEntityEnergyCapability(player).getMorotaEnergy()),player);
+                log.debug("sync player data");
                 log.debug("player has been add energy in server, current energy: " + PlayerUtil.getMorotaEntityEnergyCapability(player).getMorotaEnergy());
             }else{
                 log.warn("player is not exist,please resend packet");
@@ -62,24 +65,4 @@ public class ClientMorotaItemEnergyPacket implements IPacket {
         });
         context.setPacketHandled(true);
     }
-/*    @Override
-    public void handle(Supplier<NetworkEvent.Context> supplier) {
-        NetworkEvent.Context context = supplier.get();
-        context.enqueueWork(() -> {
-            ServerPlayer player = context.getSender();
-            if (player != null) {
-                log.debug("sender: " + player.getName() + " | " + player.getStringUUID());
-                itemStack.getCapability(MorotaItemEnergyCapabilityProvider.MOROTA_ITEM_ENERGY_CAPABILITY).ifPresent(itemCapability -> {
-                    log.debug("get item capability data: " + itemCapability.getMorotaEnergy());
-                    PlayerUtil.getMorotaEntityEnergyCapability(player).addEnergyData(consumption);
-                    log.debug("player has been add energy in server, current energy: " + PlayerUtil.getMorotaEntityEnergyCapability(player).getMorotaEnergy());
-                    Networking.sendToClient(new ServerMorotaItemEnergyPacket(itemStack, consumption), player);
-                    log.debug("send to client sync item data");
-                });
-            }else{
-                log.warn("player is not exist,please resend packet");
-            }
-        });
-        context.setPacketHandled(true);
-    }*/
 }

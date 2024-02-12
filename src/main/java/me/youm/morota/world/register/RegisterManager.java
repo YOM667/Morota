@@ -11,5 +11,6 @@ public class RegisterManager {
         ItemRegister.ITEMS.register(eventBus);
         BlockRegister.BLOCKS.register(eventBus);
         EntityRegister.ENTITY_TYPE.register(eventBus);
+
     }
 }
