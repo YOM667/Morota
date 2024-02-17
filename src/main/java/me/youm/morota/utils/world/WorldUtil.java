@@ -22,4 +22,8 @@ public class WorldUtil {
         lightingBolt.setOrder(player);
         level.addFreshEntity(lightingBolt);
     }
+    public static void specialAttack(Player player){
+        Vec3 position = player.position();
+
+    }
 }

@@ -1,15 +1,21 @@
 package me.youm.morota.events;
 
 import me.youm.morota.Morota;
+import me.youm.morota.client.key.KeyBindings;
+import me.youm.morota.networking.Networking;
+import me.youm.morota.networking.packets.ClientMorotaEnergyPacket;
+import me.youm.morota.utils.player.PlayerUtil;
 import me.youm.morota.world.item.MorotaBottle;
 import me.youm.morota.world.player.capability.MorotaEntityEnergyCapability;
 import me.youm.morota.world.player.capability.MorotaEntityEnergyCapabilityProvider;
 import me.youm.morota.world.player.capability.MorotaItemEnergyCapabilityProvider;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.util.LazyOptional;
@@ -58,5 +64,14 @@ public class ClientForgeEvent {
     @SubscribeEvent
     public static void registerHUD(final RenderGameOverlayEvent event){
         Morota.rendererManager.register(event);
+    }
+    @SubscribeEvent
+    public static void reigsterKey(InputEvent.KeyInputEvent event){
+        if (KeyBindings.SPECIAL_ATTACK.consumeClick()) {
+            MorotaEntityEnergyCapability capability = PlayerUtil.getMorotaEntityEnergyCapability(Minecraft.getInstance().player);
+            if (capability.isMaxEnergy()) {
+                Networking.sendToServer(new ClientMorotaEnergyPacket(0));
+            }
+        }
     }
 }

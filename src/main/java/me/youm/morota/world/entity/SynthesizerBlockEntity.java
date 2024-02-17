@@ -1,6 +1,10 @@
 package me.youm.morota.world.entity;
 
 import me.youm.morota.Morota;
+import me.youm.morota.client.screen.SynthesizerMenu;
+import me.youm.morota.utils.Util;
+import me.youm.morota.world.register.EntityRegister;
+import me.youm.morota.world.register.ItemRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -12,9 +16,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -27,25 +32,25 @@ import org.jetbrains.annotations.Nullable;
  * @author YouM
  * Created on 2024/1/25
  */
-public class MorotaSynthesizerBlockEntity extends BlockEntity implements MenuProvider {
+public class SynthesizerBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemStackHandler = new ItemStackHandler(4){
         @Override
         protected void onContentsChanged(int slot) {
-            MorotaSynthesizerBlockEntity.this.setChanged();
+            SynthesizerBlockEntity.this.setChanged();
         }
     };
     private final ContainerData data;
     private int progress;
     private int maxProgress = 100;
     private LazyOptional<ItemStackHandler> itemHandlerOptional = LazyOptional.empty();
-    public MorotaSynthesizerBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
-        super(pType, pPos, pBlockState);
+    public SynthesizerBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(EntityRegister.MOROTA_SYNTHESIZER_BLOCK.get(), pPos, pBlockState);
         data = new ContainerData() {
             @Override
             public int get(int pIndex) {
                 return switch (pIndex) {
-                    case 0 -> MorotaSynthesizerBlockEntity.this.progress;
-                    case 1 -> MorotaSynthesizerBlockEntity.this.maxProgress;
+                    case 0 -> SynthesizerBlockEntity.this.progress;
+                    case 1 -> SynthesizerBlockEntity.this.maxProgress;
                     default -> 0;
                 };
             }
@@ -53,8 +58,8 @@ public class MorotaSynthesizerBlockEntity extends BlockEntity implements MenuPro
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 0 -> MorotaSynthesizerBlockEntity.this.progress = pValue;
-                    case 1 -> MorotaSynthesizerBlockEntity.this.maxProgress = pValue;
+                    case 0 -> SynthesizerBlockEntity.this.progress = pValue;
+                    case 1 -> SynthesizerBlockEntity.this.maxProgress = pValue;
                     default -> {
                         Morota.LOGGER.error("ERROR in MorotaSynthesizerBlockEntity: index not exist");
                     }
@@ -76,7 +81,7 @@ public class MorotaSynthesizerBlockEntity extends BlockEntity implements MenuPro
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
-        return null /*new SynthesizerMenu(pContainerId,pPlayerInventory,pPlayer,this.data)*/;
+        return new SynthesizerMenu(pContainerId,pPlayerInventory,this,this.data);
     }
 
     @NotNull
@@ -113,8 +118,41 @@ public class MorotaSynthesizerBlockEntity extends BlockEntity implements MenuPro
         this.progress = nbt.getInt("morota_synthesizer.progress");
         super.load(nbt);
     }
-    public static void serverTick(Level plevel,BlockPos pBlockPos,BlockState pBlockState,MorotaSynthesizerBlockEntity entity){
-        /*if(level.isClientSide)return;*/
+    public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, SynthesizerBlockEntity entity){
+        if(level.isClientSide) return;
+        if(canCraft(entity)){
+            entity.progress++;
+            setChanged(level,blockPos,blockState);
+            if(entity.progress >= entity.maxProgress){
+                entity.itemStackHandler.extractItem(1,1,false);
+                entity.itemStackHandler.setStackInSlot(4, new ItemStack(ItemRegister.MOROTA_BOTTLE.get(), 1));
+                entity.progress = 0;
+            }
+        }else{
+            entity.progress = 0;
+            setChanged(level,blockPos,blockState);
+        }
+    }
+
+    private static boolean canCraft(SynthesizerBlockEntity entity) {
+        SimpleContainer container = new SimpleContainer();
+        Util.repeat(entity.itemStackHandler.getSlots(),
+                slot -> container.setItem(slot, entity.itemStackHandler.getStackInSlot(slot))
+        );
+        return checkSameItem(entity)
+                && canInsertItem(container,ItemRegister.MOROTA_BOTTLE.get().getDefaultInstance())
+                && canInsertCount(container);
+    }
+    public static boolean checkSameItem(SynthesizerBlockEntity entity){
+        return entity.itemStackHandler.getStackInSlot(1).sameItem(Items.GLASS_BOTTLE.getDefaultInstance()) &&
+                entity.itemStackHandler.getStackInSlot(2).sameItem(Items.LAPIS_LAZULI.getDefaultInstance()) &&
+                entity.itemStackHandler.getStackInSlot(3).sameItem(ItemRegister.MOROTA_COAL.get().getDefaultInstance());
+    }
+    private static boolean canInsertCount(SimpleContainer container){
+        return container.getItem(4).getMaxStackSize() > container.getItem(4).getMaxStackSize();
+    }
+    private static boolean canInsertItem(SimpleContainer container,ItemStack stack){
+        return container.getItem(4).sameItem(stack) || container.getItem(4).isEmpty();
     }
 
     public void dropItems(){

@@ -1,9 +1,11 @@
 package me.youm.morota.world.register;
 
 import me.youm.morota.Morota;
+import me.youm.morota.world.item.MorotaBottle;
+import me.youm.morota.world.item.MorotaCoal;
+import me.youm.morota.world.item.MorotaSword;
 import me.youm.morota.world.register.item.MorotaCreativeTab;
 import me.youm.morota.world.register.item.MorotaTiers;
-import me.youm.morota.world.item.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.DeferredRegister;
@@ -29,8 +31,8 @@ public class ItemRegister {
     public static final RegistryObject<Item> MOROTA_COAL = ITEMS.register("morota_coal",
             () -> new MorotaCoal(
                     new Item.Properties().tab(MorotaCreativeTab.TAB)
-                    .defaultDurability(100)
-                    .rarity(Rarity.UNCOMMON)
+                            .defaultDurability(50)
+                            .rarity(Rarity.UNCOMMON)
             )
     );
     public static final RegistryObject<Item> MOROTA_BOTTLE = ITEMS.register("morota_bottle",

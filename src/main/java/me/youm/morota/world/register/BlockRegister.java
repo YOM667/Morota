@@ -1,7 +1,7 @@
 package me.youm.morota.world.register;
 
 import me.youm.morota.Morota;
-import me.youm.morota.world.block.MorotaSynthesizerBlock;
+import me.youm.morota.world.block.SynthesizerBlock;
 import me.youm.morota.world.register.item.MorotaCreativeTab;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 public class BlockRegister {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Morota.MOD_ID);
     public static final RegistryObject<Block> MOROTA_SYNTHESIZER = registerBlock("morota_synthesizer",
-            ()-> new MorotaSynthesizerBlock(BlockBehaviour.Properties
+            ()-> new SynthesizerBlock(BlockBehaviour.Properties
                     .of(Material.STONE)
                     .requiresCorrectToolForDrops()
                     .strength(30.0f,1200.0f)),

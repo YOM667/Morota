@@ -3,5 +3,7 @@
   "item.morota.morota_sword": "Morota Sword",
   "item.morota.morota_coal": "Morota Coal",
   "item.morota.morota_bottle": "Morota Bottle",
-  "block.morota.morota_synthesizer": "Morota Synthesizer"
+  "block.morota.morota_synthesizer": "Morota Synthesizer",
+  "key.morota.special_attack": "Special Attack",
+  "key_category.morota.special_attack": "Morota"
 }

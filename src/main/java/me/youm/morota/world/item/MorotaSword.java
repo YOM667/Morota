@@ -53,7 +53,7 @@ public class MorotaSword extends SwordItem {
             index += 1;
             Vec3 lightingLocation = new Vec3(
                     pPlayer.getX() + lookAngle.x * index * padding,
-                    pPlayer.getY(),
+                    pPlayer.getY() - pPlayer.fallDistance,
                     pPlayer.getZ() + lookAngle.z * index * padding
             );
             WorldUtil.createLightingBolt(pLevel, pPlayer, lightingLocation, 50);

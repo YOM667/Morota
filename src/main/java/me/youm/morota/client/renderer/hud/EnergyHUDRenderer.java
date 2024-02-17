@@ -43,7 +43,6 @@ public class EnergyHUDRenderer {
                 11,
                 0xFFFFFF
         );
-
     }));
 
 }

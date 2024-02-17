@@ -11,6 +11,8 @@ public class RegisterManager {
         ItemRegister.ITEMS.register(eventBus);
         BlockRegister.BLOCKS.register(eventBus);
         EntityRegister.ENTITY_TYPE.register(eventBus);
+        EntityRegister.BLOCK_ENTITY_TYPE.register(eventBus);
+        MenuRegister.MENU_TYPE.register(eventBus);
 
     }
 }
