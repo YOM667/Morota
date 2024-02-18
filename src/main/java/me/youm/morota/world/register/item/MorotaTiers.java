@@ -1,12 +1,9 @@
 package me.youm.morota.world.register.item;
 
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.LazyLoadedValue;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -14,22 +11,27 @@ import java.util.function.Supplier;
  * @author YouM
  * Created on 2024/1/24
  */
+@SuppressWarnings("deprecation")
 public enum MorotaTiers implements Tier {
     MOROTA(0, 10000, 20.0F, 10.0F, 25, Ingredient::of);
+    // mined level
     private final int level;
+    // max uses
     private final int uses;
+    // mining speed
     private final float speed;
+    // attack damage bonus
     private final float damage;
     private final int enchantmentValue;
     private final LazyLoadedValue<Ingredient> repairIngredient;
 
-    private MorotaTiers(int pLevel, int pUses, float pSpeed, float pDamage, int pEnchantmentValue, Supplier<Ingredient> pRepairIngredient) {
-        this.level = pLevel;
-        this.uses = pUses;
-        this.speed = pSpeed;
-        this.damage = pDamage;
-        this.enchantmentValue = pEnchantmentValue;
-        this.repairIngredient = new LazyLoadedValue<>(pRepairIngredient);
+    MorotaTiers(int level, int uses, float speed, float damage, int enchantmentValue, Supplier<Ingredient> repairIngredient) {
+        this.level = level;
+        this.uses = uses;
+        this.speed = speed;
+        this.damage = damage;
+        this.enchantmentValue = enchantmentValue;
+        this.repairIngredient = new LazyLoadedValue<>(repairIngredient);
     }
     @Override
     public int getUses() {
@@ -52,12 +54,8 @@ public enum MorotaTiers implements Tier {
         return this.enchantmentValue;
     }
     @Override
+    @NotNull
     public Ingredient getRepairIngredient() {
         return this.repairIngredient.get();
     }
-
-    private static TagKey<Item> bind(String pName) {
-        return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(pName));
-    }
-
 }

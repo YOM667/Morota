@@ -1,6 +1,7 @@
 package me.youm.morota.events;
 
 import me.youm.morota.Morota;
+import me.youm.morota.sever.command.CommandManager;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,7 +15,7 @@ import net.minecraftforge.server.command.ConfigCommand;
 public class CommonForgeEvent {
     @SubscribeEvent
     public static void registerCommand(final RegisterCommandsEvent event){
-        Morota.commandManager.load(event.getDispatcher());
+        CommandManager.load(event.getDispatcher());
         ConfigCommand.register(event.getDispatcher());
     }
 }

@@ -63,12 +63,12 @@ public class ClientForgeEvent {
     }
     @SubscribeEvent
     public static void registerHUD(final RenderGameOverlayEvent event){
-        Morota.rendererManager.register(event);
+        Morota.rendererManager.load(event);
     }
     @SubscribeEvent
     public static void reigsterKey(InputEvent.KeyInputEvent event){
         if (KeyBindings.SPECIAL_ATTACK.consumeClick()) {
-            MorotaEntityEnergyCapability capability = PlayerUtil.getMorotaEntityEnergyCapability(Minecraft.getInstance().player);
+            MorotaEntityEnergyCapability capability = PlayerUtil.getMorotaCapability(Minecraft.getInstance().player);
             if (capability.isMaxEnergy()) {
                 Networking.sendToServer(new ClientMorotaEnergyPacket(0));
             }

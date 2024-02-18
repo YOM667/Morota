@@ -25,26 +25,26 @@ import java.util.concurrent.atomic.AtomicReference;
  * Created on 2024/2/2
  */
 public class MorotaBottle extends Item {
-    public MorotaBottle(Properties pProperties) {
-        super(pProperties);
+    public MorotaBottle(Properties properties) {
+        super(properties);
     }
     @Override
-    public int getUseDuration(@NotNull ItemStack pStack) {
+    public int getUseDuration(@NotNull ItemStack stack) {
         return 24;
     }
     @NotNull
     @Override
-    public UseAnim getUseAnimation(@NotNull ItemStack pStack) {
+    public UseAnim getUseAnimation(@NotNull ItemStack stack) {
         return UseAnim.DRINK;
     }
     @NotNull
     @Override
-    public InteractionResultHolder<ItemStack> use(@NotNull Level pLevel,@NotNull Player pPlayer,@NotNull InteractionHand pHand) {
-        ItemStack bottleStack = pPlayer.getItemInHand(pHand);
+    public InteractionResultHolder<ItemStack> use(@NotNull Level level,@NotNull Player player,@NotNull InteractionHand hand) {
+        ItemStack bottleStack = player.getItemInHand(hand);
         AtomicReference<InteractionResultHolder<ItemStack>> resultHolder = new AtomicReference<>();
         bottleStack.getCapability(MorotaItemEnergyCapabilityProvider.MOROTA_ITEM_ENERGY_CAPABILITY).ifPresent(capability-> {
             if(capability.getMorotaEnergy() > 0){
-                resultHolder.set(ItemUtils.startUsingInstantly(pLevel, pPlayer, pHand));
+                resultHolder.set(ItemUtils.startUsingInstantly(level, player, hand));
             }else{
                 resultHolder.set(InteractionResultHolder.fail(bottleStack));
             }
@@ -53,29 +53,29 @@ public class MorotaBottle extends Item {
     }
     @NotNull
     @Override
-    public ItemStack finishUsingItem(ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pEntityLiving) {
-        if(!pLevel.isClientSide){
-            return pStack;
+    public ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity livingEntity) {
+        if(!level.isClientSide){
+            return stack;
         }
-        pStack.getCapability(MorotaItemEnergyCapabilityProvider.MOROTA_ITEM_ENERGY_CAPABILITY).ifPresent(capability-> {
+        stack.getCapability(MorotaItemEnergyCapabilityProvider.MOROTA_ITEM_ENERGY_CAPABILITY).ifPresent(capability-> {
             int energy = capability.getMorotaEnergy();
             for (BottleDataType dataType : BottleDataType.values()) {
                 if (energy == dataType.data) {
-                    Networking.sendToServer(new ClientMorotaItemEnergyPacket(pStack,dataType.consumption));
+                    Networking.sendToServer(new ClientMorotaItemEnergyPacket(stack,dataType.consumption));
                 }
             }
         });
-        pLevel.gameEvent(pEntityLiving, GameEvent.DRINKING_FINISH, pEntityLiving.eyeBlockPosition());
-        return pStack;
+        level.gameEvent(livingEntity, GameEvent.DRINKING_FINISH, livingEntity.eyeBlockPosition());
+        return stack;
     }
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, @NotNull TooltipFlag tooltipFlag) {
         AtomicInteger energy = new AtomicInteger();
-        pStack.getCapability(MorotaItemEnergyCapabilityProvider.MOROTA_ITEM_ENERGY_CAPABILITY).ifPresent(capability -> {
+        stack.getCapability(MorotaItemEnergyCapabilityProvider.MOROTA_ITEM_ENERGY_CAPABILITY).ifPresent(capability -> {
             energy.set(capability.getMorotaEnergy());
         });
-        pTooltipComponents.add(new TextComponent("energy: " + energy));
-        super.appendHoverText(pStack,pLevel,pTooltipComponents,pIsAdvanced);
+        components.add(new TextComponent("energy: " + energy));
+        super.appendHoverText(stack,level,components,tooltipFlag);
     }
 
 }

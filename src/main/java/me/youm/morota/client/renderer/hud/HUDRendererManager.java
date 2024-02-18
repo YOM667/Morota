@@ -16,7 +16,7 @@ public class HUDRendererManager {
     public HUDRendererManager(){
         hudList.add(EnergyHUDRenderer.render);
     }
-    public void register(RenderGameOverlayEvent event){
+    public void load(RenderGameOverlayEvent event){
         Window window = event.getWindow();
         PoseStack poseStack = event.getMatrixStack();
         float partialTicks = event.getPartialTicks();

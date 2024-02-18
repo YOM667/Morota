@@ -55,10 +55,10 @@ public class ClientMorotaItemEnergyPacket implements IPacket {
                         log.debug("not same item");
                     }
                 });
-                PlayerUtil.getMorotaEntityEnergyCapability(player).addEnergyData(consumption);
-                Networking.sendToClient(new ServerMorotaEnergySyncPacket(PlayerUtil.getMorotaEntityEnergyCapability(player).getMorotaEnergy()),player);
+                PlayerUtil.getMorotaCapability(player).addEnergyData(consumption);
+                Networking.sendToClient(new ServerMorotaEnergySyncPacket(PlayerUtil.getMorotaCapability(player).getMorotaEnergy()),player);
                 log.debug("sync player data");
-                log.debug("player has been add energy in server, current energy: " + PlayerUtil.getMorotaEntityEnergyCapability(player).getMorotaEnergy());
+                log.debug("player has been add energy in server, current energy: " + PlayerUtil.getMorotaCapability(player).getMorotaEnergy());
             }else{
                 log.warn("player is not exist,please resend packet");
             }

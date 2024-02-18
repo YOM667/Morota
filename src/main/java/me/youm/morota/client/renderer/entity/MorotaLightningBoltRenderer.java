@@ -16,6 +16,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
+/**
+ * @author YouM
+ * Created on 2024/1/31 <br/>
+ * custom renderer for lightning bolt updated lightning blot color <br/>
+ * to fit with custom lightning bolt entity {@link me.youm.morota.world.entity.MorotaLightningBolt}
+ */
 @OnlyIn(Dist.CLIENT)
 public class MorotaLightningBoltRenderer extends EntityRenderer<MorotaLightningBolt> {
    public MorotaLightningBoltRenderer(EntityRendererProvider.Context pContext) {

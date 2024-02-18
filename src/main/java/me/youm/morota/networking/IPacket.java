@@ -9,7 +9,16 @@ import java.util.function.Supplier;
 
 public interface IPacket {
     Logger log = LogUtils.getLogger();
+
+    /**
+     * write packet field to the networking
+     * @param buf byte buffer
+     */
     void toBytes(FriendlyByteBuf buf);
 
+    /**
+     * handle the packet in the network
+     * @param context the context
+     */
     void handle(Supplier<NetworkEvent.Context> context);
 }

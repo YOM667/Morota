@@ -26,10 +26,13 @@ import java.util.Optional;
 /**
  * @author YouM
  * Created on 2024/1/31
+ *
+ * extend {@link net.minecraft.world.entity.LightningBolt}, purpose is: <br/>
+ * implement when lightning bolt struck not spawn fire {@link #canSpawnFire} and not attack owner {@link #attackOwner}
  */
 public class MorotaLightningBolt extends LightningBolt {
     private boolean canSpawnFire = true;
-    private LazyOptional<Entity> attackOrderOptional = LazyOptional.empty();
+    private LazyOptional<Entity> attackOwner = LazyOptional.empty();
     public MorotaLightningBolt(EntityType<? extends LightningBolt> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -39,13 +42,6 @@ public class MorotaLightningBolt extends LightningBolt {
         if(canSpawnFire) super.spawnFire(pExtraIgnitions);
     }
 
-    public boolean isCanSpawnFire() {
-        return canSpawnFire;
-    }
-
-    public void setCanSpawnFire(boolean canSpawnFire) {
-        this.canSpawnFire = canSpawnFire;
-    }
     @Override
     public void tick() {
         if (this.life == 2) {
@@ -92,7 +88,7 @@ public class MorotaLightningBolt extends LightningBolt {
 
                 for(Entity entity : list1) {
                     if (!ForgeEventFactory.onEntityStruckByLightning(entity, this)) {
-                        Optional<Entity> resolve = attackOrderOptional.resolve();
+                        Optional<Entity> resolve = attackOwner.resolve();
                         if(resolve.isPresent() && resolve.get().is(entity)){
                             continue;
                         }
@@ -120,7 +116,14 @@ public class MorotaLightningBolt extends LightningBolt {
         Vec3 vec3 = this.position();
         return new BlockPos(vec3.x, vec3.y - 1.0E-6D, vec3.z);
     }
-    public void setOrder(Entity entity){
-        this.attackOrderOptional = LazyOptional.of(() -> entity);
+    public boolean isCanSpawnFire() {
+        return canSpawnFire;
+    }
+
+    public void setCanSpawnFire(boolean canSpawnFire) {
+        this.canSpawnFire = canSpawnFire;
+    }
+    public void setOwner(Entity entity){
+        this.attackOwner = LazyOptional.of(() -> entity);
     }
 }

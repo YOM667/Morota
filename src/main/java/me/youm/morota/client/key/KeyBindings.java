@@ -9,6 +9,7 @@ import org.lwjgl.glfw.GLFW;
  * @author YouM
  * Created on 2024/2/13
  */
+// TODO add keybindings
 public class KeyBindings {
     public static final KeyMapping SPECIAL_ATTACK = new KeyMapping(
             "key.morota.special_attack",

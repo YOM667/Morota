@@ -4,7 +4,6 @@ import me.youm.morota.Morota;
 import me.youm.morota.world.item.MorotaBottle;
 import me.youm.morota.world.item.MorotaCoal;
 import me.youm.morota.world.item.MorotaSword;
-import me.youm.morota.world.register.item.MorotaCreativeTab;
 import me.youm.morota.world.register.item.MorotaTiers;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -24,20 +23,20 @@ public class ItemRegister {
                     MorotaTiers.MOROTA,
                     4,
                     -2.8f,
-                    new Item.Properties().tab(MorotaCreativeTab.TAB)
+                    new Item.Properties().tab(ModRegisterManager.TAB)
                             .rarity(Rarity.EPIC)
             )
     );
     public static final RegistryObject<Item> MOROTA_COAL = ITEMS.register("morota_coal",
             () -> new MorotaCoal(
-                    new Item.Properties().tab(MorotaCreativeTab.TAB)
+                    new Item.Properties().tab(ModRegisterManager.TAB)
                             .defaultDurability(50)
                             .rarity(Rarity.UNCOMMON)
             )
     );
     public static final RegistryObject<Item> MOROTA_BOTTLE = ITEMS.register("morota_bottle",
             () -> new MorotaBottle(
-                    new Item.Properties().stacksTo(1).tab(MorotaCreativeTab.TAB)
+                    new Item.Properties().stacksTo(1).tab(ModRegisterManager.TAB)
             )
     );
 

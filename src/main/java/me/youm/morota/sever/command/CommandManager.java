@@ -12,8 +12,8 @@ import java.util.List;
  * Created on 2024/2/3
  */
 public class CommandManager {
-    public final List<CommandExecutor> commandExecutors = new ArrayList<>();
-    public void load(CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static final List<CommandExecutor> commandExecutors = new ArrayList<>();
+    public static void load(CommandDispatcher<CommandSourceStack> dispatcher) {
         commandExecutors.add(new MorotaEnergyCommand(dispatcher));
     }
 }

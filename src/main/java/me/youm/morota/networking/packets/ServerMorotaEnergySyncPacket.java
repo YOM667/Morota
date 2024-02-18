@@ -1,7 +1,8 @@
 package me.youm.morota.networking.packets;
 
 import me.youm.morota.networking.IPacket;
-import me.youm.morota.world.player.capability.MorotaEntityEnergyCapabilityProvider;
+import me.youm.morota.utils.player.PlayerUtil;
+import me.youm.morota.world.player.capability.MorotaEntityEnergyCapability;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
@@ -11,9 +12,10 @@ import java.util.function.Supplier;
 /**
  * @author YouM
  * Created on 2024/2/11
+ * sync morota energy to local player capability
  */
 public class ServerMorotaEnergySyncPacket implements IPacket {
-    private int data;
+    private final int data;
     public ServerMorotaEnergySyncPacket(int data) {
         this.data = data;
     }
@@ -31,10 +33,10 @@ public class ServerMorotaEnergySyncPacket implements IPacket {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(()->{
-            Minecraft.getInstance().player.getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).ifPresent(capability->{
-                capability.setMorotaEnergy(data);
-            });
+            assert Minecraft.getInstance().player != null;
+            MorotaEntityEnergyCapability morotaCapability = PlayerUtil.getMorotaCapability(Minecraft.getInstance().player);
+            morotaCapability.setMorotaEnergy(data);
         });
-
+        context.setPacketHandled(true);
     }
 }

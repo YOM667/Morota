@@ -125,6 +125,8 @@ public class SynthesizerBlockEntity extends BlockEntity implements MenuProvider 
             setChanged(level,blockPos,blockState);
             if(entity.progress >= entity.maxProgress){
                 entity.itemStackHandler.extractItem(1,1,false);
+                entity.itemStackHandler.extractItem(2,1,false);
+                entity.itemStackHandler.extractItem(3,1,false);
                 entity.itemStackHandler.setStackInSlot(4, new ItemStack(ItemRegister.MOROTA_BOTTLE.get(), 1));
                 entity.progress = 0;
             }
@@ -135,7 +137,7 @@ public class SynthesizerBlockEntity extends BlockEntity implements MenuProvider 
     }
 
     private static boolean canCraft(SynthesizerBlockEntity entity) {
-        SimpleContainer container = new SimpleContainer();
+        SimpleContainer container = new SimpleContainer(entity.itemStackHandler.getSlots());
         Util.repeat(entity.itemStackHandler.getSlots(),
                 slot -> container.setItem(slot, entity.itemStackHandler.getStackInSlot(slot))
         );
@@ -144,9 +146,9 @@ public class SynthesizerBlockEntity extends BlockEntity implements MenuProvider 
                 && canInsertCount(container);
     }
     public static boolean checkSameItem(SynthesizerBlockEntity entity){
-        return entity.itemStackHandler.getStackInSlot(1).sameItem(Items.GLASS_BOTTLE.getDefaultInstance()) &&
-                entity.itemStackHandler.getStackInSlot(2).sameItem(Items.LAPIS_LAZULI.getDefaultInstance()) &&
-                entity.itemStackHandler.getStackInSlot(3).sameItem(ItemRegister.MOROTA_COAL.get().getDefaultInstance());
+        return (entity.itemStackHandler.getStackInSlot(1).getItem() == Items.GLASS_BOTTLE) &&
+                (entity.itemStackHandler.getStackInSlot(2).getItem() == Items.LAPIS_LAZULI) &&
+                (entity.itemStackHandler.getStackInSlot(3).getItem() == ItemRegister.MOROTA_COAL.get());
     }
     private static boolean canInsertCount(SimpleContainer container){
         return container.getItem(4).getMaxStackSize() > container.getItem(4).getMaxStackSize();

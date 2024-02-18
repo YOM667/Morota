@@ -2,8 +2,10 @@ package me.youm.morota.networking.packets;
 
 import me.youm.morota.networking.IPacket;
 import me.youm.morota.networking.Networking;
-import me.youm.morota.world.player.capability.MorotaEntityEnergyCapabilityProvider;
+import me.youm.morota.utils.player.PlayerUtil;
+import me.youm.morota.world.player.capability.MorotaEntityEnergyCapability;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -30,10 +32,12 @@ public class ClientMorotaEnergyPacket implements IPacket {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            context.getSender().getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).ifPresent(capability -> {
-                capability.setMorotaEnergy(energy);
-                Networking.sendToClient(new ServerMorotaEnergySyncPacket(capability.getMorotaEnergy()), context.getSender());
-            });
+            ServerPlayer player = context.getSender();
+            assert player != null;
+            MorotaEntityEnergyCapability morotaCapability = PlayerUtil.getMorotaCapability(player);
+            morotaCapability.setMorotaEnergy(energy);
+            // sync the energy to the sender's client
+            Networking.sendToClient(new ServerMorotaEnergySyncPacket(morotaCapability.getMorotaEnergy()), player);
         });
         context.setPacketHandled(true);
     }

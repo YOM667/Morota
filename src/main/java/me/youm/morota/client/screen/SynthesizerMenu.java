@@ -33,10 +33,10 @@ public class SynthesizerMenu extends AbstractContainerMenu {
         this.level = playerInventory.player.level;
         this.addPlayerInventoryAndHotBar(playerInventory);
         this.entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler,0,12,15));
-            this.addSlot(new SlotItemHandler(handler,1,24,15));
-            this.addSlot(new SlotItemHandler(handler,2,18,26));
-            this.addSlot(new SlotItemHandler(handler,3,50,22));
+            this.addSlot(new SlotItemHandler(handler,0,12,17));
+            this.addSlot(new SlotItemHandler(handler,1,56,17));
+            this.addSlot(new SlotItemHandler(handler,2,34,53));
+            this.addSlot(new SlotItemHandler(handler,3,116,35));
         });
         addDataSlots(data);
     }

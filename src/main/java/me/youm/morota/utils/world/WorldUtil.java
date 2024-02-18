@@ -19,7 +19,7 @@ public class WorldUtil {
         lightingBolt.setVisualOnly(false);
         lightingBolt.setDamage(damage);
         lightingBolt.setCanSpawnFire(false);
-        lightingBolt.setOrder(player);
+        lightingBolt.setOwner(player);
         level.addFreshEntity(lightingBolt);
     }
     public static void specialAttack(Player player){
