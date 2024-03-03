@@ -1,7 +1,6 @@
 package me.youm.morota.client.renderer.hud;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 import java.util.ArrayList;
@@ -18,8 +17,11 @@ public class HUDRendererManager {
     }
     public void load(RenderGameOverlayEvent event){
         Window window = event.getWindow();
-        PoseStack poseStack = event.getMatrixStack();
-        float partialTicks = event.getPartialTicks();
-        this.hudList.forEach(renderer-> renderer.render(poseStack, partialTicks, window.getGuiScaledWidth(), window.getGuiScaledHeight()));
+        this.hudList.forEach(renderer -> renderer.render(
+                event.getMatrixStack(),
+                event.getPartialTicks(),
+                window.getGuiScaledWidth(),
+                window.getGuiScaledHeight()
+        ));
     }
 }

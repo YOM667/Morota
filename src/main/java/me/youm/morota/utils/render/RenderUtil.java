@@ -4,8 +4,15 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
 import me.youm.morota.Morota;
+import me.youm.morota.utils.Util;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+
+import java.awt.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author YouM
@@ -33,5 +40,29 @@ public class RenderUtil {
         bufferbuilder.vertex(matrix4f, x, y, 0.0f).uv(u * widthProportion, v * heightProportion).endVertex();
         bufferbuilder.end();
         BufferUploader.end(bufferbuilder);
+    }
+    public static void drawFadeText(PoseStack poseStack, Font font, String text, int x, int y, int colorIndex, int speed, Color color){
+        char[] charArray = text.toCharArray();
+        AtomicInteger newX = new AtomicInteger(x);
+        Util.repeat(charArray.length, index -> {
+            String character = String.valueOf(charArray[index]);
+            int width = font.width(character);
+            Color fade = ColorUtil.fade(speed, index * colorIndex, color, color.getAlpha());
+            drawText(poseStack,font,character,newX.get(),y,fade);
+            newX.set(newX.get() + width);
+        });
+
+    }
+    public static void drawText(PoseStack poseStack, Font font, String text, int x, int y, Color color) {
+        GuiComponent.drawString(poseStack,font,text,x,y,color.getRGB());
+    }
+    public static void drawText(PoseStack poseStack, Font font, Component text, int x, int y, Color color) {
+        GuiComponent.drawString(poseStack,font,text.getVisualOrderText(),x,y,color.getRGB());
+    }
+    public static void drawCenteredText(PoseStack poseStack, Font font, Component text, int x, int y, Color color) {
+        drawText(poseStack,font,text,x - font.width(text.getVisualOrderText()) / 2,y,color);
+    }
+    public static void drawCenteredText(PoseStack poseStack, Font font, String text, int x, int y, Color color) {
+        drawText(poseStack,font,text,x - font.width(text) / 2,y,color);
     }
 }

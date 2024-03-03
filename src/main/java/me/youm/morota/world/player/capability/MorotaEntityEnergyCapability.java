@@ -46,6 +46,6 @@ public class MorotaEntityEnergyCapability implements INBTSerializable<CompoundTa
         this.MAX_ENERGY = maxEnergy;
     }
     public int getMaxEnergy(){
-        return this.morotaEnergy;
+        return this.MAX_ENERGY;
     }
 }

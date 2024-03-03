@@ -10,9 +10,10 @@ import net.minecraft.resources.ResourceLocation;
  * Created on 2024/2/11
  */
 public class FontLoader {
+    public final ResourceLocation siyuanResource = new ResourceLocation("font");
     public final Font siyuan;
     public FontLoader(){
-        siyuan = getFontRenderer(new ResourceLocation("font"));
+        siyuan = getFontRenderer(siyuanResource);
     }
     public Font getFontRenderer(ResourceLocation fontId) {
         FontManager fontManager = Minecraft.getInstance().fontManager;

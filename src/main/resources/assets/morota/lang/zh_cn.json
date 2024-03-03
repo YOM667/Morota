@@ -1,9 +1,16 @@
 {
-  "itemGroup.morota": "莫罗塔",
+  "mod.morota": "莫罗塔",
+
   "item.morota.morota_sword": "莫罗塔之剑",
   "item.morota.morota_coal": "莫罗塔煤矿石",
   "item.morota.morota_bottle": "莫罗塔特质容器",
+
   "block.morota.morota_synthesizer": "莫罗塔合成器",
+
   "key.morota.special_attack": "特殊攻击",
-  "key_category.morota.special_attack": "莫罗塔"
+
+  "key_category.morota.special_attack": "莫罗塔",
+
+  "tip.morota_sword.1": "宇宙本源之石构造之剑,能够引动自然之力",
+  "tip.morota_sword.2": "消耗10能量释放雷霆"
 }
