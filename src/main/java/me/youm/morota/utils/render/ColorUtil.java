@@ -7,7 +7,7 @@ import java.awt.*;
  * Created on 2024/3/1
  */
 public class ColorUtil {
-    public static final Color theme = new Color(94,94,230);
+    public static final Color THEME = new Color(94,94,230);
     public static Color fade(int speed, int index, Color color, int alpha) {
         float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
         int angle = (int) ((System.currentTimeMillis() / speed + index) % 360);

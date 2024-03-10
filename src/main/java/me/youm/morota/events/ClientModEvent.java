@@ -1,17 +1,10 @@
 package me.youm.morota.events;
 
 import me.youm.morota.Morota;
-import me.youm.morota.client.key.KeyBindings;
 import me.youm.morota.client.renderer.entity.MorotaLightningBoltRenderer;
-import me.youm.morota.networking.Networking;
-import me.youm.morota.networking.packets.ClientMorotaEnergyPacket;
-import me.youm.morota.utils.player.PlayerUtil;
-import me.youm.morota.world.player.capability.MorotaEntityEnergyCapability;
 import me.youm.morota.world.register.EntityRegister;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 

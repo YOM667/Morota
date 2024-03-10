@@ -1,7 +1,7 @@
 package me.youm.morota.events;
 
 import me.youm.morota.Morota;
-import me.youm.morota.client.key.KeyBindings;
+import me.youm.morota.client.MorotaKeys;
 import me.youm.morota.networking.Networking;
 import me.youm.morota.networking.packets.ClientMorotaEnergyPacket;
 import me.youm.morota.utils.player.PlayerUtil;
@@ -33,12 +33,13 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientForgeEvent {
     @SubscribeEvent
     public static void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event){
-        if(event.getObject() instanceof Player){
-            if(!event.getObject().getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).isPresent()) {
+        if(event.getObject() instanceof Player player){
+            if(!player.getCapability(MorotaEntityEnergyCapabilityProvider.MOROTA_ENTITY_ENERGY_CAPABILITY).isPresent()) {
                 event.addCapability(new ResourceLocation(Morota.MOD_ID, "properties"), new MorotaEntityEnergyCapabilityProvider());
             }
         }
     }
+
     @SubscribeEvent
     public static void onAttachItemStackCapabilityEvent(AttachCapabilitiesEvent<ItemStack> event) {
         if (event.getObject().getItem() instanceof MorotaBottle) {
@@ -58,6 +59,13 @@ public class ClientForgeEvent {
         event.getOriginal().invalidateCaps();
     }
     @SubscribeEvent
+    public static void onJoinGame(PlayerEvent.PlayerLoggedInEvent event){
+        if (Minecraft.getInstance().player != null && event.getPlayer().is(Minecraft.getInstance().player)) {
+            MorotaEntityEnergyCapability morotaCapability = PlayerUtil.getMorotaCapability(event.getPlayer());
+            PlayerUtil.getMorotaCapability(Minecraft.getInstance().player).setMorotaEnergy(morotaCapability.getMorotaEnergy());
+        }
+    }
+    @SubscribeEvent
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event){
         event.register(MorotaEntityEnergyCapability.class);
     }
@@ -67,7 +75,7 @@ public class ClientForgeEvent {
     }
     @SubscribeEvent
     public static void reigsterKey(InputEvent.KeyInputEvent event){
-        if (KeyBindings.SPECIAL_ATTACK.consumeClick()) {
+        if (MorotaKeys.SPECIAL_ATTACK.consumeClick()) {
             MorotaEntityEnergyCapability capability = PlayerUtil.getMorotaCapability(Minecraft.getInstance().player);
             if (capability.isMaxEnergy()) {
                 Networking.sendToServer(new ClientMorotaEnergyPacket(0));

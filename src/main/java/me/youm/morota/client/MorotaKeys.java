@@ -1,4 +1,4 @@
-package me.youm.morota.client.key;
+package me.youm.morota.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
@@ -10,7 +10,7 @@ import org.lwjgl.glfw.GLFW;
  * Created on 2024/2/13
  */
 // TODO add keybindings
-public class KeyBindings {
+public class MorotaKeys {
     public static final KeyMapping SPECIAL_ATTACK = new KeyMapping(
             "key.morota.special_attack",
             KeyConflictContext.IN_GAME,

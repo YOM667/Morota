@@ -1,20 +1,24 @@
 package me.youm.morota.world.register;
 
 import me.youm.morota.Morota;
-import me.youm.morota.client.key.KeyBindings;
+import me.youm.morota.client.MorotaKeys;
 import me.youm.morota.client.renderer.hud.HUDRendererManager;
 import me.youm.morota.client.screen.SynthesizerScreen;
 import me.youm.morota.networking.Networking;
 import me.youm.morota.utils.render.FontLoader;
 import me.youm.morota.world.register.item.MorotaItemProperties;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author YouM
@@ -31,6 +35,8 @@ public class ModRegisterManager {
         EntityRegister.ENTITY_TYPE.register(eventBus);
         EntityRegister.BLOCK_ENTITY_TYPE.register(eventBus);
         MenuRegister.MENU_TYPE.register(eventBus);
+        VillagerRegister.POI_TYPE.register(eventBus);
+        VillagerRegister.VILLAGER_PROFESSIONS.register(eventBus);
     }
 
     /**
@@ -40,7 +46,7 @@ public class ModRegisterManager {
     public void clientSetup(final FMLClientSetupEvent event) {
         event.enqueueWork(()->{
             MorotaItemProperties.customItemTexture();
-            ClientRegistry.registerKeyBinding(KeyBindings.SPECIAL_ATTACK);
+            ClientRegistry.registerKeyBinding(MorotaKeys.SPECIAL_ATTACK);
             MenuScreens.register(MenuRegister.SYNTHESIZER_MENU.get(), SynthesizerScreen::new);
         });
     }
@@ -51,11 +57,20 @@ public class ModRegisterManager {
      */
     public void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(()->{
+            this.registerPOIS();
             Morota.fontLoader = new FontLoader();
             Morota.rendererManager = new HUDRendererManager();
             Networking.register();
             Morota.LOGGER.info("MOD SETUP...");
         });
+    }
+    public void registerPOIS(){
+        try {
+            ObfuscationReflectionHelper.findMethod(PoiType.class,"reigsterBlockStates", PoiType.class)
+                    .invoke(null, BlockRegister.MOROTA_SYNTHESIZER);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
     public static final CreativeModeTab TAB = new CreativeModeTab(Morota.MOD_ID) {
 

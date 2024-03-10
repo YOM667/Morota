@@ -44,7 +44,7 @@ public class MorotaSword extends SwordItem {
      */
     @NotNull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack item = player.getItemInHand(hand);
 
         AtomicBoolean energyEnough = new AtomicBoolean(true);
@@ -79,7 +79,8 @@ public class MorotaSword extends SwordItem {
             // create lightning bolt, damage 50
             WorldUtil.createLightingBolt(level, player, lightingLocation, 50);
         });
-        return super.use(level, player, hand);
+        player.getCooldowns().addCooldown(this, 30);
+        return InteractionResultHolder.success(item);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class MorotaSword extends SwordItem {
         tooltipComponents.add(new TranslatableComponent("tip.morota_sword.1")
                 .setStyle(Style.EMPTY.withBold(true)
                         .withItalic(true)
-                        .withColor(TextColor.fromRgb(ColorUtil.theme.getRGB()))
+                        .withColor(TextColor.fromRgb(ColorUtil.THEME.getRGB()))
                 ));
         tooltipComponents.add(new TranslatableComponent("tip.morota_sword.2")
                 .setStyle(Style.EMPTY.withUnderlined(true)

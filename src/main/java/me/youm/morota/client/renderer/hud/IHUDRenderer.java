@@ -9,6 +9,5 @@ import com.mojang.blaze3d.vertex.PoseStack;
 @FunctionalInterface
 public interface IHUDRenderer {
     void render(PoseStack poseStack, float partialTick, int width, int height);
-    Long
 }
 
