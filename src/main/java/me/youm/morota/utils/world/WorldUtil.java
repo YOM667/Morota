@@ -1,11 +1,18 @@
 package me.youm.morota.utils.world;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import me.youm.morota.world.entity.MorotaLightningBolt;
 import me.youm.morota.world.register.EntityRegister;
 import net.minecraft.core.Vec3i;
+import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author YouM
@@ -22,8 +29,16 @@ public class WorldUtil {
         lightingBolt.setOwner(player);
         level.addFreshEntity(lightingBolt);
     }
-    public static void specialAttack(Player player){
-        Vec3 position = player.position();
-
+    public static void addVillagerTradingRecipes(
+            Int2ObjectMap<List<VillagerTrades.ItemListing>> trade,
+            HashMap<ItemStack, ItemStack> map,
+            int villagerLevel
+    ) {
+        map.forEach((currency, commodity) -> {
+            trade.get(villagerLevel).add((trader, rand) -> new MerchantOffer(
+                    currency,
+                    commodity, 10,8,0.02F));
+        });
     }
+
 }

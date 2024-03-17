@@ -57,16 +57,16 @@ public class ModRegisterManager {
      */
     public void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(()->{
-            this.registerPOIS();
-            Morota.fontLoader = new FontLoader();
             Morota.rendererManager = new HUDRendererManager();
+            Morota.fontLoader = new FontLoader();
             Networking.register();
             Morota.LOGGER.info("MOD SETUP...");
+            this.registerPOIS();
         });
     }
     public void registerPOIS(){
         try {
-            ObfuscationReflectionHelper.findMethod(PoiType.class,"reigsterBlockStates", PoiType.class)
+            ObfuscationReflectionHelper.findMethod(PoiType.class,"registerBlockStates", PoiType.class)
                     .invoke(null, BlockRegister.MOROTA_SYNTHESIZER);
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);

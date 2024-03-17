@@ -74,7 +74,7 @@ public class ClientForgeEvent {
         Morota.rendererManager.load(event);
     }
     @SubscribeEvent
-    public static void reigsterKey(InputEvent.KeyInputEvent event){
+    public static void registerKey(InputEvent.KeyInputEvent event){
         if (MorotaKeys.SPECIAL_ATTACK.consumeClick()) {
             MorotaEntityEnergyCapability capability = PlayerUtil.getMorotaCapability(Minecraft.getInstance().player);
             if (capability.isMaxEnergy()) {

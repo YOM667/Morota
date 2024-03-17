@@ -24,7 +24,6 @@ public class ItemRegister {
                     4,
                     -2.8f,
                     new Item.Properties().tab(ModRegisterManager.TAB)
-                            .rarity(Rarity.EPIC)
             )
     );
     public static final RegistryObject<Item> MOROTA_COAL = ITEMS.register("morota_coal",

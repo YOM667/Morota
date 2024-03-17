@@ -12,5 +12,7 @@
   "key_category.morota.special_attack": "Morota",
 
   "tip.morota_sword.1": "The sword of the Stone of the Origin of the Universe is capable of attracting the forces of nature",
-  "tip.morota_sword.2": "Consumes 10 energy to release thunder"
+  "tip.morota_sword.2": "Consumes 10 energy to release thunder",
+
+  "entity.minecraft.villager.morota.morota_master": "Morota Master"
 }

@@ -12,5 +12,7 @@
   "key_category.morota.special_attack": "莫罗塔",
 
   "tip.morota_sword.1": "宇宙本源之石构造之剑,能够引动自然之力",
-  "tip.morota_sword.2": "消耗10能量释放雷霆"
+  "tip.morota_sword.2": "消耗10能量释放雷霆",
+
+  "entity.minecraft.villager.morota.morota_master": "莫罗塔村民"
 }

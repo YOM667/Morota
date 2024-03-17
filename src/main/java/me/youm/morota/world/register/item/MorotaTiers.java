@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  */
 @SuppressWarnings("deprecation")
 public enum MorotaTiers implements Tier {
-    MOROTA(0, 10000, 20.0F, 10.0F, 25, Ingredient::of);
+    MOROTA(0, 10000, 20.0F, 12.0F, 25, Ingredient::of);
     // mined level
     private final int level;
     // max uses
